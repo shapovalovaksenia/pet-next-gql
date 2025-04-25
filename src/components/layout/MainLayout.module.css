@@ -1,0 +1,38 @@
+.mainLayout {
+  min-height: 100vh;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  padding-inline: 48px;
+}
+
+.logo {
+  color: white;
+  margin-right: 20px;
+  font-weight: bold;
+}
+
+.menu {
+  flex: 1;
+  min-width: 0;
+  line-height: 64px;
+  background: none;
+  border-bottom: none;
+}
+
+.content {
+  padding: 20px 48px;
+}
+
+.contentWrapper {
+  background: #fff;
+  padding: 24px;
+  min-height: 280px;
+  border-radius: 8px;
+}
+
+.footer {
+  text-align: center;
+}

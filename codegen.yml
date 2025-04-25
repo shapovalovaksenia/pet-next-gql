@@ -1,0 +1,12 @@
+overwrite: true
+schema: ./schema.subset.graphql
+documents: "src/**/*.tsx"
+ignoreNoDocuments: true
+generates:
+  src/graphql/generated/index.ts:
+    plugins:
+      - typescript
+      - typescript-operations
+      - typed-document-node
+    config:
+      gqlTagName: gql
