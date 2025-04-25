@@ -7,7 +7,7 @@ import {
   GetUserProfileDocument,
   AddStarDocument,
   RemoveStarDocument,
-} from "@/graphql/generated";
+} from "@/graphql/generated/github";
 
 import type {
   GetUserProfileQuery,
@@ -15,7 +15,7 @@ import type {
   AddStarMutationVariables,
   RemoveStarMutation,
   RemoveStarMutationVariables,
-} from "@/graphql/generated";
+} from "@/graphql/generated/github";
 
 import { Typography, Spin, Space, message } from "antd";
 
