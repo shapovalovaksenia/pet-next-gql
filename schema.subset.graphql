@@ -1,0 +1,64 @@
+scalar URI
+scalar DateTime
+
+type User {
+  login: String!
+  name: String
+  avatarUrl: URI!
+  url: URI!
+  bio: String
+  email: String!
+}
+
+type Language {
+  name: String!
+  color: String
+}
+
+interface Starrable {
+  id: ID!
+  viewerHasStarred: Boolean!
+  stargazerCount: Int!
+}
+
+type Repository implements Starrable {
+  id: ID!
+  nameWithOwner: String!
+  description: String
+  url: URI!
+  stargazerCount: Int!
+  viewerHasStarred: Boolean!
+  isPrivate: Boolean!
+  pushedAt: DateTime
+  primaryLanguage: Language
+}
+
+type Query {
+  viewer: User!
+  repository(owner: String!, name: String!): Repository
+}
+
+input AddStarInput {
+  starrableId: ID!
+  clientMutationId: String
+}
+
+type AddStarPayload {
+  clientMutationId: String
+  starrable: Starrable
+}
+
+input RemoveStarInput {
+  starrableId: ID!
+  clientMutationId: String
+}
+
+type RemoveStarPayload {
+  clientMutationId: String
+  starrable: Starrable
+}
+
+type Mutation {
+  addStar(input: AddStarInput!): AddStarPayload
+  removeStar(input: RemoveStarInput!): RemoveStarPayload
+}
