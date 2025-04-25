@@ -1,17 +1,13 @@
 "use client";
 
-import React from "react";
+import React, { FC, PropsWithChildren } from "react";
 import { Layout, Menu } from "antd";
 import styles from "./MainLayout.module.css";
 
 const { Header, Content, Footer } = Layout;
 import { menuItems } from "@/shared/constant";
 
-export default function MainLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+const MainLayout: FC<PropsWithChildren> = ({ children }) => {
   return (
     <Layout className={styles.mainLayout}>
       <Header className={styles.header}>
@@ -32,4 +28,6 @@ export default function MainLayout({
       </Footer>
     </Layout>
   );
-}
+};
+
+export default MainLayout;

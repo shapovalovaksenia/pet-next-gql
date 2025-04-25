@@ -4,7 +4,7 @@ import { StarOutlined, StarFilled } from "@ant-design/icons";
 import type { GetUserProfileQuery } from "@/graphql/generated";
 
 const { Paragraph } = Typography;
-
+import ExternalLink from "@/components/common/ExternalLink";
 interface RepositoryCardProps {
   repository: GetUserProfileQuery["repository"] | null | undefined;
   isLoading: boolean;
@@ -36,13 +36,7 @@ export default function RepositoryCard({
   return (
     <Card
       title={
-        repoUrl ? (
-          <a href={repoUrl} target="_blank" rel="noopener noreferrer">
-            {repository.nameWithOwner}
-          </a>
-        ) : (
-          repository.nameWithOwner
-        )
+        <ExternalLink href={repoUrl}>{repository.nameWithOwner}</ExternalLink>
       }
       extra={
         <Button
@@ -63,11 +57,13 @@ export default function RepositoryCard({
       }
     >
       <Paragraph>{repository.description ?? "No description."}</Paragraph>
+
       {repository.primaryLanguage && (
         <Tag color={repository.primaryLanguage.color ?? undefined}>
           {repository.primaryLanguage.name}
         </Tag>
       )}
+
       <Tag>Private: {repository.isPrivate ? "Yes" : "No"}</Tag>
       {pushedAtDate && <Tag>Last push: {pushedAtDate}</Tag>}
     </Card>

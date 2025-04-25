@@ -1,7 +1,7 @@
 import React from "react";
 import { Card, Avatar, Typography, Space } from "antd";
 import type { GetUserProfileQuery } from "@/graphql/generated";
-
+import ExternalLink from "@/components/common/ExternalLink";
 const { Title, Paragraph } = Typography;
 
 interface UserProfileCardProps {
@@ -22,16 +22,11 @@ export default function UserProfileCard({ viewer }: UserProfileCardProps) {
         <Avatar size={64} src={avatarUrl} />
         <Title level={4} style={{ margin: 0 }}>
           {viewer.name || viewer.login}{" "}
-          {profileUrl ? (
-            <a href={profileUrl} target="_blank" rel="noopener noreferrer">
-              ({viewer.login})
-            </a>
-          ) : (
-            `(${viewer.login})`
-          )}
+          <ExternalLink href={profileUrl}>({viewer.login})</ExternalLink>
         </Title>
       </Space>
       <Paragraph style={{ marginTop: 8 }}>{viewer.bio ?? "No bio."}</Paragraph>
+
       {viewer.email && <Paragraph>Email: {viewer.email}</Paragraph>}
     </Card>
   );
