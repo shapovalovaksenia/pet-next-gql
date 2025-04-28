@@ -1,8 +1,9 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React from "react";
 import { Form, Input, Select, Row, Col, Button, Space } from "antd";
 import type { FilterCharacter } from "@/graphql/generated/rickmorty";
+import { CHARACTER_GENDERS, CHARACTER_STATUSES } from "@/shared/constant";
 
 const { Option } = Select;
 
@@ -10,16 +11,12 @@ interface CharacterFilterBarProps {
   initialAppliedFilters: FilterCharacter;
   onApplyFilters: (filters: FilterCharacter) => void;
 }
-import { CHARACTER_GENDERS, CHARACTER_STATUSES } from "@/shared/constant";
+
 const CharacterFilterBar: React.FC<CharacterFilterBarProps> = ({
   initialAppliedFilters,
   onApplyFilters,
 }) => {
   const [form] = Form.useForm<FilterCharacter>();
-
-  useEffect(() => {
-    form.setFieldsValue(initialAppliedFilters);
-  }, [initialAppliedFilters, form]);
 
   const handleFinish = (values: FilterCharacter) => {
     const cleanFilters: FilterCharacter = {};

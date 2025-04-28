@@ -16,6 +16,7 @@ import type {
 import CharacterFilterBar from "@/components/features/rick-and-morty/CharacterFilterBar";
 import CharacterList from "@/components/features/rick-and-morty/CharacterList";
 import { parseFiltersFromSearchParams } from "@/helpers/url";
+
 interface CharacterClientPageProps {
   initialData: GetCharactersQuery | null;
 }
@@ -69,6 +70,7 @@ export default function CharacterClientPage({
     ) ?? [];
 
   const hasDataToShow = charactersToShow.length > 0;
+
   return (
     <Space direction="vertical" style={{ width: "100%" }} size="large">
       <CharacterFilterBar
