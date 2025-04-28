@@ -2,12 +2,15 @@
 
 import React, { FC, PropsWithChildren } from "react";
 import { Layout, Menu } from "antd";
+import { usePathname } from "next/navigation";
+import { menuItems } from "@/shared/constant";
 import styles from "./MainLayout.module.css";
 
 const { Header, Content, Footer } = Layout;
-import { menuItems } from "@/shared/constant";
 
 const MainLayout: FC<PropsWithChildren> = ({ children }) => {
+  const pathname = usePathname();
+
   return (
     <Layout className={styles.mainLayout}>
       <Header className={styles.header}>
@@ -18,6 +21,7 @@ const MainLayout: FC<PropsWithChildren> = ({ children }) => {
           items={menuItems}
           className={styles.menu}
           defaultSelectedKeys={["/"]}
+          selectedKeys={[pathname]}
         />
       </Header>
       <Content className={styles.content}>

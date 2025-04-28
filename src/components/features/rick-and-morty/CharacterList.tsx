@@ -3,7 +3,7 @@
 import React from "react";
 import { List } from "antd";
 import type { Character } from "@/graphql/generated/rickmorty";
-import CharacterCard from "./CharacterCard";
+import CharacterCard from "./CharacterCard/CharacterCard";
 
 interface CharacterListProps {
   characters: Character[];

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useCallback } from "react";
+import React, { useCallback, useMemo } from "react";
 import { useQuery } from "@apollo/client";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Alert, Spin, Space } from "antd";
@@ -15,39 +15,26 @@ import type {
 
 import CharacterFilterBar from "@/components/features/rick-and-morty/CharacterFilterBar";
 import CharacterList from "@/components/features/rick-and-morty/CharacterList";
-
+import { parseFiltersFromSearchParams } from "@/helpers/url";
 interface CharacterClientPageProps {
-  serverFilters: FilterCharacter;
   initialData: GetCharactersQuery | null;
-  initialError?: string | null;
 }
 
 export default function CharacterClientPage({
-  serverFilters,
   initialData,
-  initialError,
 }: CharacterClientPageProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  const [appliedFilters] = useState<FilterCharacter>(() => {
-    const params = new URLSearchParams(searchParams.toString());
-    const currentFilters: FilterCharacter = {};
-    if (params.get("status")) currentFilters.status = params.get("status")!;
-    if (params.get("species")) currentFilters.species = params.get("species")!;
-    if (params.get("gender")) currentFilters.gender = params.get("gender")!;
-    if (params.get("type")) currentFilters.type = params.get("type")!;
-    return Object.keys(currentFilters).length > 0
-      ? currentFilters
-      : serverFilters;
-  });
+  const currentFilters = useMemo(() => {
+    return parseFiltersFromSearchParams(searchParams);
+  }, [searchParams]);
 
   const { data, loading, error } = useQuery<
     GetCharactersQuery,
     GetCharactersQueryVariables
   >(GetCharactersDocument, {
-    variables: { filter: appliedFilters },
-    // skip: !!initialData && !initialError,
+    variables: { filter: currentFilters },
     notifyOnNetworkStatusChange: true,
   });
 
@@ -63,14 +50,12 @@ export default function CharacterClientPage({
   );
 
   const displayData = data ?? initialData;
-  const displayError = error?.message ?? initialError;
+  const displayError = error?.message;
 
   const showMainLoading =
     loading &&
     (!displayData?.characters?.results ||
       displayData.characters.results.length === 0);
-
-  // const showLoading = loading && !initialData;
 
   const showError =
     !!displayError &&
@@ -87,7 +72,7 @@ export default function CharacterClientPage({
   return (
     <Space direction="vertical" style={{ width: "100%" }} size="large">
       <CharacterFilterBar
-        initialAppliedFilters={appliedFilters}
+        initialAppliedFilters={currentFilters}
         onApplyFilters={handleApplyFilters}
       />
 

@@ -10,15 +10,12 @@ interface CharacterFilterBarProps {
   initialAppliedFilters: FilterCharacter;
   onApplyFilters: (filters: FilterCharacter) => void;
 }
-
+import { CHARACTER_GENDERS, CHARACTER_STATUSES } from "@/shared/constant";
 const CharacterFilterBar: React.FC<CharacterFilterBarProps> = ({
   initialAppliedFilters,
   onApplyFilters,
 }) => {
   const [form] = Form.useForm<FilterCharacter>();
-
-  const statuses = ["Alive", "Dead", "unknown"];
-  const genders = ["Female", "Male", "Genderless", "unknown"];
 
   useEffect(() => {
     form.setFieldsValue(initialAppliedFilters);
@@ -26,11 +23,13 @@ const CharacterFilterBar: React.FC<CharacterFilterBarProps> = ({
 
   const handleFinish = (values: FilterCharacter) => {
     const cleanFilters: FilterCharacter = {};
+
     Object.entries(values).forEach(([key, value]) => {
       if (value !== "" && value !== null && value !== undefined) {
         cleanFilters[key as keyof FilterCharacter] = value;
       }
     });
+
     onApplyFilters(cleanFilters);
   };
 
@@ -50,7 +49,7 @@ const CharacterFilterBar: React.FC<CharacterFilterBarProps> = ({
         <Col xs={24} sm={12} md={6}>
           <Form.Item name="status" label="Status">
             <Select placeholder="Any status" allowClear>
-              {statuses.map((s) => (
+              {CHARACTER_STATUSES.map((s) => (
                 <Option key={s} value={s}>
                   {s}
                 </Option>
@@ -66,7 +65,7 @@ const CharacterFilterBar: React.FC<CharacterFilterBarProps> = ({
         <Col xs={24} sm={12} md={6}>
           <Form.Item name="gender" label="Gender">
             <Select placeholder="Any gender" allowClear>
-              {genders.map((g) => (
+              {CHARACTER_GENDERS.map((g) => (
                 <Option key={g} value={g}>
                   {g}
                 </Option>

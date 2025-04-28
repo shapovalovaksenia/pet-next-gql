@@ -12,6 +12,18 @@ export const RICKMORTY_GRAPHQL_ENDPOINT =
 
 export const GITHUB_TOKEN = process.env.NEXT_PUBLIC_GITHUB_PAT;
 
+export const CHARACTER_STATUSES: ReadonlyArray<string> = [
+  "Alive",
+  "Dead",
+  "unknown",
+];
+export const CHARACTER_GENDERS: ReadonlyArray<string> = [
+  "Female",
+  "Male",
+  "Genderless",
+  "unknown",
+];
+
 export const menuItems = [
   { key: "/", icon: <HomeOutlined />, label: <Link href="/">Home</Link> },
   {
