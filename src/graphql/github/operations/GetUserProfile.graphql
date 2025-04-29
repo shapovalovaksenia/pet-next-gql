@@ -1,0 +1,24 @@
+query GetUserProfile {
+  viewer {
+    login
+    name
+    avatarUrl
+    url
+    bio
+    email
+  }
+  repository(owner: "shapovalovaksenia", name: "pet-next-gql") {
+    id
+    nameWithOwner
+    description
+    url
+    stargazerCount
+    viewerHasStarred
+    isPrivate
+    pushedAt
+    primaryLanguage {
+      name
+      color
+    }
+  }
+}

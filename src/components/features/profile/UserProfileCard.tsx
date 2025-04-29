@@ -1,6 +1,6 @@
 import React from "react";
 import { Card, Avatar, Typography, Space } from "antd";
-import type { GetUserProfileQuery } from "@/graphql/generated";
+import type { GetUserProfileQuery } from "@/graphql/generated/github";
 import ExternalLink from "@/components/common/ExternalLink";
 const { Title, Paragraph } = Typography;
 

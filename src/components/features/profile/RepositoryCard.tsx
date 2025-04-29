@@ -1,7 +1,7 @@
 import React from "react";
 import { Card, Button, Tag, Typography, Alert } from "antd";
 import { StarOutlined, StarFilled } from "@ant-design/icons";
-import type { GetUserProfileQuery } from "@/graphql/generated";
+import type { GetUserProfileQuery } from "@/graphql/generated/github";
 
 const { Paragraph } = Typography;
 import ExternalLink from "@/components/common/ExternalLink";
