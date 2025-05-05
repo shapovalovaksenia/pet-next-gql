@@ -43,11 +43,15 @@ const AnimeDetailsModal: React.FC<AnimeDetailsModalProps> = ({
     () => (media?.averageScore ? `${media.averageScore} / 100` : "-"),
     [media?.averageScore]
   );
-  const genresList = useMemo(
-    () =>
-      media?.genres?.filter((g): g is string => typeof g === "string") ?? [],
-    [media?.genres]
-  );
+  const genresList = useMemo(() => {
+    const sourceGenres = media?.genres ?? [];
+
+    const stringGenres = sourceGenres.filter(
+      (g): g is string => typeof g === "string"
+    );
+
+    return stringGenres;
+  }, [media?.genres]);
 
   if (!media) {
     return null;
