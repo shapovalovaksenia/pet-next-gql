@@ -1,0 +1,32 @@
+query GetMediaList($page: Int, $perPage: Int, $sort: [MediaSort]) {
+  Page(page: $page, perPage: $perPage) {
+    pageInfo {
+      total
+      currentPage
+      lastPage
+      hasNextPage
+      perPage
+    }
+    media(sort: $sort, type: ANIME) {
+      id
+      title {
+        romaji
+        english
+      }
+      description(asHtml: false)
+      coverImage {
+        large
+        medium
+        color
+      }
+      averageScore
+      startDate {
+        year
+        month
+        day
+      }
+      genres
+      siteUrl
+    }
+  }
+}
