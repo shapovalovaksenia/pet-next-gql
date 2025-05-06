@@ -47,7 +47,7 @@ const AnimeDetailsModal: React.FC<AnimeDetailsModalProps> = ({
     const sourceGenres = media?.genres ?? [];
 
     const stringGenres = sourceGenres.filter(
-      (g): g is string => typeof g === "string"
+      (genres): genres is string => typeof genres === "string"
     );
 
     return stringGenres;

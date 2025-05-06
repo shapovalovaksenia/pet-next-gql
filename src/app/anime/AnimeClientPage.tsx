@@ -105,7 +105,9 @@ export default function AnimeClientPage({
     (!displayData?.Page?.media || displayData.Page.media.length === 0);
 
   const mediaListToShow: Media[] =
-    displayData?.Page?.media?.filter((m): m is Media => m !== null) ?? [];
+    displayData?.Page?.media?.filter(
+      (media): media is Media => media !== null
+    ) ?? [];
 
   const hasDataToShow = mediaListToShow.length > 0;
 

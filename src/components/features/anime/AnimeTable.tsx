@@ -8,6 +8,10 @@ import { MediaSort } from "@/graphql/generated/anilist";
 import ExternalLink from "@/components/common/ExternalLink";
 import { ClientParagraph } from "@/components/client-wrappers/AntdTypography";
 import { stripHtml } from "@/helpers/utils";
+import {
+  getInitialSortColumnKey,
+  getInitialSortOrder,
+} from "@/helpers/sorting";
 
 interface AnimeTableProps {
   mediaList: Array<Media | null | undefined>;
@@ -22,26 +26,6 @@ interface AnimeTableProps {
 }
 
 type MediaTableRow = Media & { key: React.Key };
-
-const getInitialSortOrder = (
-  sort: MediaSort | null
-): "ascend" | "descend" | undefined => {
-  if (!sort) {
-    return undefined;
-  }
-  if (sort.endsWith("DESC")) {
-    return "descend";
-  }
-  return "ascend";
-};
-
-const getInitialSortColumnKey = (
-  sort: MediaSort | null
-): string | undefined => {
-  if (sort?.startsWith("SCORE")) return "score";
-  if (sort?.startsWith("TITLE")) return "title";
-  return undefined;
-};
 
 const AnimeTable: React.FC<AnimeTableProps> = ({
   mediaList,
