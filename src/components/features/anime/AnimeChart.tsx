@@ -38,7 +38,7 @@ const AnimeChart: React.FC<AnimeChartProps> = ({
 }) => {
   const chartData = useMemo(() => {
     return mediaList
-      .filter((media): media is Media => media?.averageScore !== null)
+      .filter((media): media is Media => media?.averageScore != null)
       .map((media) => ({
         id: media.id,
         title: media.title?.romaji ?? media.title?.english ?? "Unknown Title",
