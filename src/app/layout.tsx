@@ -2,6 +2,7 @@ import "./globals.css";
 import { AntdRegistry } from "@ant-design/nextjs-registry";
 import { ApolloProvider } from "../providers/ApolloProvider";
 import MainLayout from "@/components/layout/MainLayout";
+import StoreProvider from "@/providers/StoreProvider";
 
 export default function RootLayout({
   children,
@@ -12,9 +13,11 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <AntdRegistry>
-          <ApolloProvider>
-            <MainLayout>{children}</MainLayout>
-          </ApolloProvider>
+          <StoreProvider>
+            <ApolloProvider>
+              <MainLayout>{children}</MainLayout>
+            </ApolloProvider>
+          </StoreProvider>
         </AntdRegistry>
       </body>
     </html>
