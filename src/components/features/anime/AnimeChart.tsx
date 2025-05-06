@@ -37,7 +37,7 @@ const AnimeChart: React.FC<AnimeChartProps> = ({
   onColumnClick,
 }) => {
   const chartData = useMemo(() => {
-    mediaList
+    return mediaList
       .filter((media): media is Media => media?.averageScore !== null)
       .map((media) => ({
         id: media.id,
