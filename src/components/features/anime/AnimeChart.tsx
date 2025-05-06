@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useMemo } from "react";
 import dynamic from "next/dynamic";
 import type { Media } from "@/graphql/generated/anilist";
 import { Spin } from "antd";
@@ -36,20 +36,17 @@ const AnimeChart: React.FC<AnimeChartProps> = ({
   mediaList,
   onColumnClick,
 }) => {
-  const chartData = mediaList
-    .filter(
-      (media): media is Media =>
-        !!media &&
-        media.averageScore !== null &&
-        media.averageScore !== undefined
-    )
-    .map((media) => ({
-      id: media.id,
-      title: media.title?.romaji ?? media.title?.english ?? "Unknown Title",
-      averageScore: media.averageScore ?? 0,
-      originalData: media,
-    }))
-    .sort((a, b) => a.averageScore - b.averageScore);
+  const chartData = useMemo(() => {
+    mediaList
+      .filter((media): media is Media => media?.averageScore !== null)
+      .map((media) => ({
+        id: media.id,
+        title: media.title?.romaji ?? media.title?.english ?? "Unknown Title",
+        averageScore: media.averageScore ?? 0,
+        originalData: media,
+      }))
+      .sort((a, b) => a.averageScore - b.averageScore);
+  }, [mediaList]);
 
   const config = {
     data: chartData,

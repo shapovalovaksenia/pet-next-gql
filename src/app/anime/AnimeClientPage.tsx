@@ -47,7 +47,7 @@ export default function AnimeClientPage({
   const [selectedMedia, setSelectedMedia] = useState<Media | null>(null);
 
   const sortVariable: MediaSort[] | undefined = currentSort
-    ? [currentSort as MediaSort]
+    ? [currentSort]
     : undefined;
 
   const { data, loading, error } = useQuery<
