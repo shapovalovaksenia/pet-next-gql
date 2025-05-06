@@ -1,0 +1,36 @@
+overwrite: true
+ignoreNoDocuments: true
+
+generates:
+  src/graphql/generated/github/index.ts:
+    schema: ./schema.subset.graphql
+    documents:
+      - "src/graphql/github/operations/**/*.graphql"
+    plugins:
+      - typescript
+      - typescript-operations
+      - typed-document-node
+    config:
+      gqlTagName: gql
+
+  src/graphql/generated/rickmorty/index.ts:
+    schema: https://rickandmortyapi.com/graphql
+    documents:
+      - "src/graphql/rick-and-morty/operations/**/*.graphql"
+    plugins:
+      - typescript
+      - typescript-operations
+      - typed-document-node
+    config:
+      gqlTagName: gql
+
+  src/graphql/generated/anilist/index.ts:
+    schema: https://graphql.anilist.co
+    documents:
+      - "src/graphql/anilist/operations/**/*.graphql"
+    plugins:
+      - typescript
+      - typescript-operations
+      - typed-document-node
+    config:
+      gqlTagName: gql
