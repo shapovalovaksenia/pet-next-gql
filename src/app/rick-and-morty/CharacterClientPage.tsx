@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useCallback, useMemo } from "react";
+import React, { useCallback, useMemo, useState, useEffect } from "react";
 import { useQuery } from "@apollo/client";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Alert, Spin, Space } from "antd";
@@ -27,9 +27,20 @@ export default function CharacterClientPage({
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  const currentFilters = useMemo(() => {
+  const parsedFilters = useMemo(() => {
     return parseFiltersFromSearchParams(searchParams);
   }, [searchParams]);
+
+  const [currentFilters, setCurrentFilters] =
+    useState<FilterCharacter>(parsedFilters);
+
+  useEffect(() => {
+    const newParsedFilters = parseFiltersFromSearchParams(searchParams);
+
+    if (JSON.stringify(newParsedFilters) !== JSON.stringify(currentFilters)) {
+      setCurrentFilters(newParsedFilters);
+    }
+  }, [searchParams, currentFilters]);
 
   const { data, loading, error } = useQuery<
     GetCharactersQuery,
@@ -41,6 +52,7 @@ export default function CharacterClientPage({
 
   const handleApplyFilters = useCallback(
     (newFilters: FilterCharacter) => {
+      setCurrentFilters(newFilters);
       const params = new URLSearchParams();
       Object.entries(newFilters).forEach(([key, value]) => {
         if (value) params.set(key, value);
@@ -49,6 +61,11 @@ export default function CharacterClientPage({
     },
     [router]
   );
+
+  const handleResetFilters = useCallback(() => {
+    setCurrentFilters({});
+    router.push(`/rick-and-morty`);
+  }, [router]);
 
   const displayData = data ?? initialData;
   const displayError = error?.message;
@@ -76,6 +93,7 @@ export default function CharacterClientPage({
       <CharacterFilterBar
         initialAppliedFilters={currentFilters}
         onApplyFilters={handleApplyFilters}
+        onResetFilters={handleResetFilters}
       />
 
       {showMainLoading && (
