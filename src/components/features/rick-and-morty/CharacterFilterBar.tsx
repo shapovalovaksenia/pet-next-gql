@@ -21,18 +21,22 @@ const CharacterFilterBar: React.FC<CharacterFilterBarProps> = ({
   const [form] = Form.useForm<FilterCharacter>();
 
   useEffect(() => {
-    form.setFieldsValue(initialAppliedFilters);
+    const filtersAreEmpty = Object.keys(initialAppliedFilters).length === 0;
+
+    if (filtersAreEmpty) {
+      form.resetFields();
+    } else {
+      form.setFieldsValue(initialAppliedFilters);
+    }
   }, [initialAppliedFilters, form]);
 
   const handleFinish = (values: FilterCharacter) => {
     const cleanFilters: FilterCharacter = {};
-
     Object.entries(values).forEach(([key, value]) => {
       if (value !== "" && value !== null && value !== undefined) {
         cleanFilters[key as keyof FilterCharacter] = value;
       }
     });
-
     onApplyFilters(cleanFilters);
   };
 

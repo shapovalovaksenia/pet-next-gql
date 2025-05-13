@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useCallback, useMemo, useState } from "react";
+import React, { useCallback, useMemo, useState, useEffect } from "react";
 import { useQuery } from "@apollo/client";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Alert, Spin, Space } from "antd";
@@ -33,7 +33,14 @@ export default function CharacterClientPage({
 
   const [currentFilters, setCurrentFilters] =
     useState<FilterCharacter>(parsedFilters);
-  const [formKey, setFormKey] = useState(0);
+
+  useEffect(() => {
+    const newParsedFilters = parseFiltersFromSearchParams(searchParams);
+
+    if (JSON.stringify(newParsedFilters) !== JSON.stringify(currentFilters)) {
+      setCurrentFilters(newParsedFilters);
+    }
+  }, [searchParams, currentFilters]);
 
   const { data, loading, error } = useQuery<
     GetCharactersQuery,
@@ -57,7 +64,6 @@ export default function CharacterClientPage({
 
   const handleResetFilters = useCallback(() => {
     setCurrentFilters({});
-    setFormKey((prev) => prev + 1);
     router.push(`/rick-and-morty`);
   }, [router]);
 
@@ -85,7 +91,6 @@ export default function CharacterClientPage({
   return (
     <Space direction="vertical" style={{ width: "100%" }} size="large">
       <CharacterFilterBar
-        key={formKey}
         initialAppliedFilters={currentFilters}
         onApplyFilters={handleApplyFilters}
         onResetFilters={handleResetFilters}
